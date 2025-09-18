@@ -9,8 +9,8 @@ use Hanafalah\ModulePayment\{
 use Hanafalah\ModulePayment\Models\Payment\PaymentHistory;
 use Hanafalah\ModulePayment\Models\Payment\PaymentSummary;
 use Hanafalah\ModulePayment\Models\Transaction\Invoice;
-use Hanafalah\ModuleTransaction\Models\Transaction\Transaction;
-use Hanafalah\ModuleTransaction\Models\Transaction\TransactionItem;
+use Hanafalah\ModulePayment\Models\Transaction\PosTransaction;
+use Hanafalah\ModulePayment\Models\Transaction\PosTransactionItem;
 
 return new class extends Migration
 {
@@ -35,9 +35,9 @@ return new class extends Migration
             Schema::create($table_name, function (Blueprint $table) {
                 $invoice                = app(config('database.models.Invoice', Invoice::class));
                 $payment_summary        = app(config('database.models.PaymentSummary', PaymentSummary::class));
-                $transaction_item       = app(config('database.models.TransactionItem', TransactionItem::class));
+                $transaction_item       = app(config('database.models.PosTransactionItem', PosTransactionItem::class));
                 $payment_history        = app(config('database.models.PaymentHistory', PaymentHistory::class));
-                $transaction            = app(config('database.models.Transaction', Transaction::class));
+                $transaction            = app(config('database.models.PosTransaction', PosTransaction::class));
 
                 $table->ulid('id')->primary();
                 $table->string('name',255)->nullable();

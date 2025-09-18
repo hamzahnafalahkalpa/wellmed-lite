@@ -32,7 +32,7 @@ return new class extends Migration
 
                 $table->ulid('id')->primary();
                 $table->foreignIdFor($activity::class, 'activity_id')->nullable()->index()
-                    ->constrained('activities', 'id')->cascadeOnUpdate()->cascadeOnDelete();
+                    ->constrained()->cascadeOnUpdate()->cascadeOnDelete();
                 $table->unsignedBigInteger('status');
                 $table->unsignedTinyInteger('active')->default(1);
                 $table->text('message');

@@ -57,6 +57,7 @@ return [
                     'TransactionHasConsument',
                     'PosTransactionItem',
                     'PaymentSummary',
+                    'PaymentHistory',
                     'SplitPayment',
                     'PaymentDetail',
                     'PaymentHasModel',

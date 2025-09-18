@@ -15,6 +15,7 @@ use Projects\WellmedLite\{
 };
 use Hanafalah\LaravelSupport\Middlewares\PayloadMonitoring;
 use Hanafalah\MicroTenant\Contracts\Supports\ConnectionManager;
+use Hanafalah\MicroTenant\Facades\MicroTenant;
 use Projects\WellmedLite\Supports\ConnectionManager as SupportsConnectionManager;
 
 class WellmedLiteServiceProvider extends WellmedLiteEnvironment
@@ -25,64 +26,65 @@ class WellmedLiteServiceProvider extends WellmedLiteEnvironment
     {
         $this->registerMainClass(WellmedLite::class,false)
              ->registerCommandService(CommandServiceProvider::class)
-             ->registerServices(function(){
-                 $this->binds([
-                    Contracts\WellmedLite::class => function(){
-                        return new WellmedLite;
-                    },
-                    ConnectionManager::class => SupportsConnectionManager::class
-                    //WorkspaceDTO\WorkspaceSettingData::class => WorkspaceSettingData::class
-                ]);
-            });
+            ->registers([
+                'Services' => function(){
+                    $this->binds([
+                        Contracts\WellmedLite::class => function(){
+                            return new WellmedLite;
+                        },
+                        ConnectionManager::class => SupportsConnectionManager::class
+                        //WorkspaceDTO\WorkspaceSettingData::class => WorkspaceSettingData::class
+                    ]);   
+                },
+                'Config' => function() {
+                    $this->__config_wellmed_lite = config('wellmed-lite');
+                },
+                'Provider' => function(){
+                    $model   = Facades\WellmedLite::myModel($this->TenantModel()->find(WellmedLite::ID));
+
+                    $this->bootedRegisters($model->packages, 'wellmed-lite', __DIR__.'/../'.$this->__config_wellmed_lite['libs']['migration'] ?? 'Migrations');
+                    $this->registerOverideConfig('wellmed-lite',__DIR__.'/../'.$this->__config_wellmed_lite['libs']['config']);
+                }
+            ]);
+            //  ->registerServices(function(){
+            //      $this->binds([
+            //         Contracts\WellmedLite::class => function(){
+            //             return new WellmedLite;
+            //         },
+            //         ConnectionManager::class => SupportsConnectionManager::class
+            //         //WorkspaceDTO\WorkspaceSettingData::class => WorkspaceSettingData::class
+            //     ]);
+            // });
     }
 
     public function boot(Kernel $kernel){        
         $kernel->pushMiddleware(PayloadMonitoring::class);
-        // $this->app->booted(function(){
-            $model   = Facades\WellmedLite::myModel($this->TenantModel()->find(WellmedLite::ID));
-            if (isset($model)){
-                $this->deferredProviders($model);
+        $model   = Facades\WellmedLite::myModel($this->TenantModel()->find(WellmedLite::ID));
+        if (isset($model)){
+            $this->deferredProviders($model);
 
-                tenancy()->initialize(WellmedLite::ID);
-                $tenant = tenancy()->tenant;
-                $tenant->save();
+            tenancy()->initialize(WellmedLite::ID);
+            $this->registers([
+                '*',
+                // 'Config' => function() {
+                //     $this->__config_wellmed_lite = config('wellmed-lite');
+                // },
+                // 'Provider' => function() use ($model){
+                //     $this->bootedRegisters($model->packages, 'wellmed-lite', __DIR__.'/../'.$this->__config_wellmed_lite['libs']['migration'] ?? 'Migrations');
+                //     // $this->registerOverideConfig('wellmed-lite',__DIR__.'/../'.$this->__config_wellmed_lite['libs']['config']);
+                // },
+                'Model', 'Database'
+            ]);
+            $this->autoBinds();
+            $this->registerRouteService(RouteServiceProvider::class);
 
-                $config_name = Str::kebab($model->name); 
+            $this->app->singleton(PathRegistry::class, function () {
+                $registry = new PathRegistry();
 
-                $this->registers([
-                    '*',
-                    'Config' => function() {
-                        $this->__config_wellmed_lite = config('wellmed-lite');
-                    },
-                    'Provider' => function() use ($model,$config_name){
-                        $this->bootedRegisters($model->packages, $config_name, __DIR__.'/../'.$this->__config_wellmed_lite['libs']['migration'] ?? 'Migrations');
-                        $this->registerOverideConfig($config_name,__DIR__.'/../'.$this->__config_wellmed_lite['libs']['config']);
-                    },
-                    'Model', 'Database'
-                ]);
-                $this->autoBinds();
-                $this->registerRouteService(RouteServiceProvider::class);
-
-                $this->app->singleton(PathRegistry::class, function () {
-                    $registry = new PathRegistry();
-
-                    $config = config("wellmed-lite");
-                    foreach ($config['libs'] as $key => $lib) $registry->set($key, 'projects'.$lib);
-                    return $registry;
-                });
-            }
-        // });
-
-    }
-
-    public function checkClusterDatabase(): self{
-        $model_connections = config('micro-tenant.database.model_connections');
-        foreach ($model_connections as $key => $model_connection) {
-            $model_connection['is_cluster'] ??= false;
-            if (isset($model_connection['is_cluster']) && $model_connection['is_cluster']) {
-                $connection = config('database.connections.'.$key);
-            }
+                $config = config("wellmed-lite");
+                foreach ($config['libs'] as $key => $lib) $registry->set($key, 'projects'.$lib);
+                return $registry;
+            });
         }
-        return $this;
-    }
+    }    
 }
