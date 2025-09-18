@@ -36,7 +36,7 @@ class WellmedLiteServiceProvider extends WellmedLiteEnvironment
             });
     }
 
-    public function boot(Kernel $kernel){
+    public function boot(Kernel $kernel){        
         $kernel->pushMiddleware(PayloadMonitoring::class);
         // $this->app->booted(function(){
             $model   = Facades\WellmedLite::myModel($this->TenantModel()->find(WellmedLite::ID));
@@ -72,5 +72,17 @@ class WellmedLiteServiceProvider extends WellmedLiteEnvironment
                 });
             }
         // });
+
+    }
+
+    public function checkClusterDatabase(): self{
+        $model_connections = config('micro-tenant.database.model_connections');
+        foreach ($model_connections as $key => $model_connection) {
+            $model_connection['is_cluster'] ??= false;
+            if (isset($model_connection['is_cluster']) && $model_connection['is_cluster']) {
+                $connection = config('database.connections.'.$key);
+            }
+        }
+        return $this;
     }
 }

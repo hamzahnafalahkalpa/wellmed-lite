@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Hanafalah\ModulePayment\Models\Transaction\TransactionHasConsument;
 use Hanafalah\ModulePayment\Models\Consument\Consument;
-use Hanafalah\ModuleTransaction\Models\Transaction\Transaction;
+use Hanafalah\ModulePayment\Models\Transaction\PosTransaction;
 
 return new class extends Migration
 {
@@ -28,11 +28,11 @@ return new class extends Migration
         $table_name = $this->__table->getTable();
         $this->isNotTableExists(function() use ($table_name){
             Schema::create($table_name, function (Blueprint $table) {
-                $transaction = app(config('database.models.Transaction', Transaction::class));
+                $transaction = app(config('database.models.PosTransaction', PosTransaction::class));
                 $consument   = app(config('database.models.Consument', Consument::class));
 
                 $table->ulid('id')->primary();
-                $table->foreignIdFor($transaction::class)->nullable()->index()
+                $table->foreignIdFor($transaction::class,'transaction_id')->nullable()->index()
                     ->constrained()->cascadeOnUpdate()->restrictOnDelete();
                 $table->foreignIdFor($consument::class)->nullable()->index();
                 $table->json('props')->nullable();

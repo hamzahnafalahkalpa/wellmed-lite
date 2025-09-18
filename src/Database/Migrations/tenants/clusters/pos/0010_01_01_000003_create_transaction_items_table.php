@@ -1,13 +1,11 @@
 <?php
 
-use App\Models\User;
+use Hanafalah\ModulePayment\Models\Transaction\PosTransaction;
+use Hanafalah\ModulePayment\Models\Transaction\PosTransactionItem;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Hanafalah\ModuleTransaction\{
-    Models\Transaction\Transaction,
-    Enums\Transaction\Status
-};
+use Hanafalah\ModuleTransaction\Models\Transaction\Transaction;
 
 return new class extends Migration
 {
@@ -17,7 +15,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->__table = app(config('database.models.Transaction', Transaction::class));
+        $this->__table = app(config('database.models.PosTransactionItem', PosTransactionItem::class));
     }
 
     /**
@@ -30,19 +28,21 @@ return new class extends Migration
         $table_name = $this->__table->getTable();
         $this->isNotTableExists(function() use ($table_name){
             Schema::create($table_name, function (Blueprint $table) {
+                $transaction = app(config('database.models.PosTransaction', PosTransaction::class));
+
                 $table->ulid('id')->primary();
-                $table->string('uuid', 36)->nullable(false);
-                $table->string('transaction_code', 100)->nullable(false);
+                $table->foreignIdFor($transaction::class,'transaction_id')->nullable()->index();
+                $table->string('name', 255)->nullable(false);
                 $table->string('reference_type', 50)->nullable(false);
                 $table->string('reference_id', 36)->nullable(false);
-                $table->enum('status',array_column(Status::cases(), 'value'))->default(Status::DRAFT->value)->nullable(false);
+                $table->string('item_type', 50)->nullable(false);
+                $table->string('item_id', 36)->nullable(false);
                 $table->json('props')->nullable();
-                $table->timestamp('reported_at')->nullable();
-                $table->timestamp('canceled_at')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
 
-                $table->index(['reference_type', 'reference_id']);
+                $table->index(['item_type', 'item_id'], 'trxi_item_ref');
+                $table->index(['reference_type', 'reference_id'], 'trxi_ref');
             });
 
             Schema::table($table_name, function (Blueprint $table) {

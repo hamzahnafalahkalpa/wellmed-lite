@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConnectionManager implements SupportsConnectionManager{
      public function handle(Model $tenant): void{
-        $connection_path = "database.connections.".$tenant->getConnectionFlagName();
+        $connection_name = $tenant->getConnectionFlagName();
+        $connection_path = "database.connections.".$connection_name;
         switch (env('DB_DRIVER',null)) {
             case 'mysql':
                 config([
