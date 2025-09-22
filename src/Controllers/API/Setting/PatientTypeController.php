@@ -13,7 +13,6 @@ class PatientTypeController extends ApiController{
     public function __construct(
         protected PatientType $__schema
     ){
-        request()->merge(['flag' => Flag::IDENTITY->value]);
         parent::__construct();
     }
 
