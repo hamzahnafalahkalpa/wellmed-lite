@@ -7,6 +7,11 @@ use Hanafalah\ModulePatient\{
 return [
     'practitioner' => 'Employee',
     'payment_detail' => 'PaymentDetail',
+    'transaction' => 'PosTransaction',
+    'features' => [
+        'payer' => false,
+        'item_rent' => false
+    ],
     'patient_types' => [
         'student' => [
             'schema' => 'PatientPeople',
