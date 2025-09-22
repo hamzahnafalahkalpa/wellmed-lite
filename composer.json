@@ -74,6 +74,13 @@
                 "symlink": true
             }
         },
+        "hanafalah/module-organization": {
+            "type": "path",
+            "url": "../../repositories/module-organization",
+            "options": {
+                "symlink": true
+            }
+        },
         "hanafalah/api-helper": {
             "type": "path",
             "url": "../../repositories/api-helper",

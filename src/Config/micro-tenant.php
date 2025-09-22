@@ -47,6 +47,7 @@ return [
                 'is_cluster' => true,
                 'connection_as' => 'tenant',
                 'models' => [
+                    'Transaction',
                     'PosTransaction',
                     'PosTransactionItem',
                     'Activity',
