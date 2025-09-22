@@ -32,7 +32,6 @@ return [
             ],
             "central_app"    => [
                 'models' => [
-                    "Encoding",
                     "MasterFeature",
                     "ModelHasFeature",
                     'CentralActivityStatus',
