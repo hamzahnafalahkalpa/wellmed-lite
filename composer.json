@@ -28,6 +28,7 @@
         "hanafalah/module-medic-service": "dev-main",
         "hanafalah/module-medical-treatment": "dev-main",
         "hanafalah/module-payment": "dev-main",
+        "hanafalah/module-payer": "dev-main",
         "hanafalah/module-people": "dev-main",
         "hanafalah/module-profession": "dev-main",
         "hanafalah/module-service": "dev-main",
@@ -62,6 +63,13 @@
         "hanafalah/module-funding": {
             "type": "path",
             "url": "../../repositories/module-funding",
+            "options": {
+                "symlink": true
+            }
+        },
+        "hanafalah/module-payer": {
+            "type": "path",
+            "url": "../../repositories/module-payer",
             "options": {
                 "symlink": true
             }
