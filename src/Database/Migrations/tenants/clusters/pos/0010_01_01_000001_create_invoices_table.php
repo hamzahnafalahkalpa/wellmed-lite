@@ -8,7 +8,7 @@ use Hanafalah\ModulePayment\Models\Transaction\Invoice;
 
 return new class extends Migration
 {
-    use Hanafalah\LaravelSupport\Concerns\NowYouSeeMe;
+    use Hanafalah\MicroTenant\Concerns\Tenant\NowYouSeeMe;
 
     private $__table;
 
@@ -25,7 +25,7 @@ return new class extends Migration
     public function up(): void
     {
         $table_name = $this->__table->getTable();
-        if (!$this->isTableExists()) {
+        $this->isNotTableExists(function() use ($table_name){
             Schema::create($table_name, function (Blueprint $table) {
                 $billing = app(config('database.models.Billing', Billing::class));
 
@@ -46,7 +46,7 @@ return new class extends Migration
                 $table->index(['author_id', 'author_type'], 'author_ref');
                 $table->index(['payer_id', 'payer_type'], 'payer_inv');
             });
-        }
+        });
     }
 
     /**

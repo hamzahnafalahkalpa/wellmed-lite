@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Hanafalah\MicroTenant\Concerns\Tenant\NowYouSeeMe;
-use Hanafalah\ModuleExamination\Models\ExaminationStuff;
+use Projects\WellmedLite\Models\WellmedUnicode;
 
 return new class extends Migration
 {
@@ -14,7 +14,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->__table = app(config('database.models.ExaminationStuff', ExaminationStuff::class));
+        $this->__table = app(config('database.models.Unicode', WellmedUnicode::class));
     }
 
     /**
@@ -24,22 +24,23 @@ return new class extends Migration
      */
     public function up()
     {
-        $table_name = $this->__table->getTable();
-        $this->isNotTableExists(function() use ($table_name){
+        $this->isNotTableExists(function(){
+            $table_name = $this->__table->getTable();
             Schema::create($table_name, function (Blueprint $table) {
                 $table->ulid('id')->primary();
                 $table->string('flag',100)->nullable(false);
-                $table->string('label',100)->nullable(true);
+                $table->string('label',100)->nullable();
                 $table->string('name', 100)->nullable(false);
-                $table->string('status', 100)->nullable(true);
+                $table->string('status', 100)->nullable();
+                $table->string('reference_type', 50)->nullable(true);
+                $table->string('reference_id', 36)->nullable(true);
                 $table->unsignedInteger('ordering')->nullable();
                 $table->json('props')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
 
-                $table->index(["flag"], "ex_st_flag");
-                $table->index(['flag','label'], "ex_st_lbl_flag");
-
+                $table->index(["flag"], "unicode_flag");
+                $table->index(['flag','label'], "ucd_lbl_flag");
             });
 
             Schema::table($table_name, function (Blueprint $table) {

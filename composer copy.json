@@ -23,12 +23,32 @@
     },
     "require": {
         "hanafalah/module-encoding": "dev-main",
-        "hanafalah/module-workspace": "dev-main",
-        "wellmed-lite/ms-emr": "dev-main",
-        "wellmed-lite/ms-point-of-sale": "dev-main",
-        "wellmed-lite/ms-scm": "dev-main",
-        "wellmed-lite/ms-hr": "dev-main",
-        "wellmed-lite/ms-apotek": "dev-main"
+        "hanafalah/module-patient": "dev-main",
+        "hanafalah/module-employee": "dev-main",
+        "hanafalah/module-medic-service": "dev-main",
+        "hanafalah/module-medical-treatment": "dev-main",
+        "hanafalah/module-payment": "dev-main",
+        "hanafalah/module-payer": "dev-main",
+        "hanafalah/module-people": "dev-main",
+        "hanafalah/module-profession": "dev-main",
+        "hanafalah/module-service": "dev-main",
+        "hanafalah/module-summary": "dev-main",
+        "hanafalah/module-transaction": "dev-main",
+        "hanafalah/module-funding": "dev-main",
+        "hanafalah/module-treatment": "dev-main",
+        "hanafalah/module-card-identity": "dev-main",
+        "hanafalah/module-item": "dev-main",
+        "hanafalah/module-medical-item": "dev-main",
+        "hanafalah/module-examination": "dev-main",
+        "hanafalah/module-disease": "dev-main",
+        "hanafalah/module-informed-consent": "dev-main",
+        "hanafalah/module-icd": "dev-main",
+        "hanafalah/module-anatomy": "dev-main",
+        "hanafalah/module-physical-examination": "dev-main",
+        "hanafalah/module-pharmacy": "dev-main",
+        "hanafalah/module-tax": "dev-main",
+        "hanafalah/module-handwriting": "dev-main",
+        "hanafalah/module-support": "dev-main"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -36,41 +56,6 @@
         "projects/wellmed-lite": {
             "type": "path",
             "url": "../../projects/wellmed-lite",
-            "options": {
-                "symlink": true
-            }
-        },
-        "wellmed-lite/ms-emr": {
-            "type": "path",
-            "url": "../../features/ms-emr",
-            "options": {
-                "symlink": true
-            }
-        },
-        "wellmed-lite/ms-apotek": {
-            "type": "path",
-            "url": "../../features/ms-apotek",
-            "options": {
-                "symlink": true
-            }
-        },
-        "wellmed-lite/ms-point-of-sale": {
-            "type": "path",
-            "url": "../../features/ms-point-of-sale",
-            "options": {
-                "symlink": true
-            }
-        },
-        "wellmed-lite/ms-scm": {
-            "type": "path",
-            "url": "../../features/ms-scm",
-            "options": {
-                "symlink": true
-            }
-        },
-        "wellmed-lite/ms-hr": {
-            "type": "path",
-            "url": "../../features/ms-hr",
             "options": {
                 "symlink": true
             }
@@ -232,13 +217,6 @@
         "hanafalah/module-profession": {
             "type": "path",
             "url": "../../repositories/module-profession",
-            "options": {
-                "symlink": true
-            }
-        },
-        "hanafalah/module-procurement": {
-            "type": "path",
-            "url": "../../repositories/module-procurement",
             "options": {
                 "symlink": true
             }

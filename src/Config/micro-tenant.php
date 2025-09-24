@@ -7,38 +7,45 @@ return [
             'suffix' => ''
         ],
         'model_connections' => [
-            "central"        => [
+            'central'        => [
                 'models' => [
-                    "ApiAccess",
-                    "Cache",
-                    "CacheLock",
-                    "Country",
-                    "District",
-                    "Domain",
-                    "FailedJob",
-                    "JobBatch",
-                    "Job",
-                    "PasswordResetToken",
-                    "PayloadMonitoring",
-                    "PersonalAccessToken",
-                    "Province",
-                    "Subdistrict",
-                    "Tenant",
-                    "UserReference",
-                    "User",
-                    "Village",
-                    "Workspace"
+                    'ApiAccess',
+                    'Cache',
+                    'CacheLock',
+                    'Country',
+                    'District',
+                    'Domain',
+                    'FailedJob',
+                    'JobBatch',
+                    'Job',
+                    'PasswordResetToken',
+                    'PayloadMonitoring',
+                    'PersonalAccessToken',
+                    'Province',
+                    'Subdistrict',
+                    'Tenant',
+                    'UserReference',
+                    'User',
+                    'Village',
+                    'Workspace',
+                    'WellmedUnicode',
+                    'WellmedAddress',
+                    'MasterFeature',
+                    'InstalledFeature',
+                    'CentralActivity',
+                    'CentralActivityStatus',
+                    'Version'
                 ]
             ],
-            "central_app"    => [
+            'central_app'    => [
                 'models' => [
-                    "MasterFeature",
-                    "ModelHasFeature",
+                    'MasterFeature',
+                    'ModelHasFeature',
                     'CentralActivityStatus',
                     'CentralActivity'
                 ]
             ],
-            "central_tenant" => [
+            'central_tenant' => [
                 'models' => [
 
                 ]
