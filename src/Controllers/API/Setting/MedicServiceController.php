@@ -12,7 +12,7 @@ class MedicServiceController extends ApiController{
     public function __construct(
         protected MedicService $__schema
     ){
-        request()->merge(['flag' => 'MEDIC_SERVICE']);
+        request()->merge(['flag' => 'MedicService']);
         parent::__construct();
     }
 

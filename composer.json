@@ -24,6 +24,7 @@
     "require": {
         "hanafalah/module-encoding": "dev-main",
         "hanafalah/module-workspace": "dev-main",
+        "hanafalah/wellmed-feature": "dev-main",
         "wellmed-lite/ms-emr": "dev-main",
         "wellmed-lite/ms-point-of-sale": "dev-main",
         "wellmed-lite/ms-scm": "dev-main",
@@ -71,6 +72,13 @@
         "wellmed-lite/ms-hr": {
             "type": "path",
             "url": "../../features/ms-hr",
+            "options": {
+                "symlink": true
+            }
+        },
+        "hanfalah/wellmed-feature": {
+            "type": "path",
+            "url": "../../repositories/wellmed-feature",
             "options": {
                 "symlink": true
             }

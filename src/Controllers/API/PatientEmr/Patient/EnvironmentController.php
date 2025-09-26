@@ -9,7 +9,9 @@ class EnvironmentController extends ApiBaseController{
 
     public function __construct(
         protected Patient $__schema,
-    ){}
+    ){
+        parent::__construct();
+    }
 
     protected function recombineRequest(){
         if (isset(request()->search_value)){

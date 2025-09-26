@@ -34,7 +34,8 @@ return [
                     'InstalledFeature',
                     'CentralActivity',
                     'CentralActivityStatus',
-                    'Version'
+                    'Version',
+                    'WellmedPermission'
                 ]
             ],
             'central_app'    => [

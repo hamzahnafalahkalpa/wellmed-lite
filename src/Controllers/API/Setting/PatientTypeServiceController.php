@@ -2,7 +2,6 @@
 
 namespace Projects\WellmedLite\Controllers\API\Setting;
 
-use Hanafalah\ModulePatient\Enums\PatientType\Flag;
 use Hanafalah\ModulePatient\Contracts\Schemas\PatientTypeService;
 use Projects\WellmedLite\Controllers\API\ApiController;
 use Projects\WellmedLite\Requests\API\Setting\PatientTypeService\{
@@ -13,7 +12,7 @@ class PatientTypeServiceController extends ApiController{
     public function __construct(
         protected PatientTypeService $__schema
     ){
-        request()->merge(['flag' => Flag::SERVICE->value]);
+        request()->merge(['flag' => 'PatientTypeService']);
         parent::__construct();
     }
 

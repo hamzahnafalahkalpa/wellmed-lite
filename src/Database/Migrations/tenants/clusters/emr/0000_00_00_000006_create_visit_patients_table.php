@@ -37,8 +37,7 @@ return new class extends Migration
                 $patient_type_service  = app(config('database.models.PatientTypeService', PatientTypeService::class));
 
                 $table->ulid('id')->primary();
-                $table->foreignIdFor($patient::class)->nullable()->index()
-                    ->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+                $table->foreignIdFor($patient::class)->nullable()->index();                    
                 $table->string('reference_type', 50)->nullable();
                 $table->string('reference_id', 36)->nullable();
                 $table->string('flag', 60)->nullable(false);
