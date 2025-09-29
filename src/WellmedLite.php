@@ -14,7 +14,6 @@ class WellmedLite extends PackageManagement implements ContractsWellmedLite{
     use Supports\LocalPath,HasRepository;
 
     const LOWER_CLASS_NAME = "wellmed-lite";
-    const SERVICE_TYPE     = "tenant";
     const ID               = "1";
 
     public ?Model $model;
