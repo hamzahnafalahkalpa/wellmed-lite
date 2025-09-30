@@ -3,18 +3,26 @@
 namespace Projects\WellmedLite\Controllers\API\PatientEmr\VisitRegistration\VisitExamination;
 
 use Projects\WellmedLite\Requests\API\PatientEmr\Patient\VisitPatient\VisitRegistration\VisitExamination\{
-    ViewRequest, ShowRequest
+    ViewRequest, ShowRequest, StoreRequest, DeleteRequest
 };
 use Projects\WellmedLite\Controllers\API\PatientEmr\VisitExamination\EnvironmentController;
 
 class VisitExaminationController extends EnvironmentController
 {
     public function index(ViewRequest $request){
-        return $this->__visit_examination_schema->viewVisitExaminationPaginate();
+        return $this->getVisitExaminationPaginate();
     }
 
     public function show(ShowRequest $request){
-        return $this->__visit_examination_schema->showVisitExamination();
+        return $this->showVisitExamination();
+    }
+
+        public function store(StoreRequest $request){
+        return $this->storeVisitExamination();
+    }
+
+    public function destroy(DeleteRequest $request){
+        return $this->deleteVisitExamination();
     }
 
     // public function done(CompateRequest $request) {
