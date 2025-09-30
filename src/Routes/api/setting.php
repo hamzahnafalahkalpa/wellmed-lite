@@ -24,6 +24,5 @@ Route::group([
     include __DIR__.'/setting/finance.php';
     include __DIR__.'/setting/general-setting.php';
     include __DIR__.'/setting/patient-emr.php'; 
-    include __DIR__.'/setting/stakeholder.php'; 
     include __DIR__.'/setting/treatment.php'; 
 });

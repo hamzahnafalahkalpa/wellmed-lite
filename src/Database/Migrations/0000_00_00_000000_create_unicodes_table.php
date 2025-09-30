@@ -14,7 +14,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->__table = app(config('database.models.Unicode', WellmedUnicode::class));
+        $this->__table = app(config('database.models.WellmedUnicode', WellmedUnicode::class));
     }
 
     /**
@@ -24,8 +24,8 @@ return new class extends Migration
      */
     public function up()
     {
-        $this->isNotTableExists(function(){
-            $table_name = $this->__table->getTable();
+        $table_name = $this->__table->getTable();
+        $this->isNotTableExists(function() use ($table_name){
             Schema::create($table_name, function (Blueprint $table) {
                 $table->ulid('id')->primary();
                 $table->string('flag',100)->nullable(false);

@@ -28,20 +28,20 @@ return [
                     'User',
                     'Village',
                     'Workspace',
-                    'WellmedUnicode',
                     'WellmedAddress',
                     'MasterFeature',
                     'InstalledFeature',
                     'CentralActivity',
                     'CentralActivityStatus',
+                    'MasterFeature',
+                    'WellmedUnicode',
                     'Version',
+                    'ModelHasFeature',
                     'WellmedPermission'
                 ]
             ],
             'central_app'    => [
                 'models' => [
-                    'MasterFeature',
-                    'ModelHasFeature',
                     'CentralActivityStatus',
                     'CentralActivity'
                 ]

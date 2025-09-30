@@ -41,7 +41,6 @@ class WellmedLiteServiceProvider extends WellmedLiteEnvironment
                 },
                 'Provider' => function(){
                     $model   = Facades\WellmedLite::myModel($this->TenantModel()->find(WellmedLite::ID));
-
                     $this->bootedRegisters($model->packages, 'wellmed-lite', __DIR__.'/../'.$this->__config_wellmed_lite['libs']['migration'] ?? 'Migrations');
                     $this->registerOverideConfig('wellmed-lite',__DIR__.'/../'.$this->__config_wellmed_lite['libs']['config']);
                 }
