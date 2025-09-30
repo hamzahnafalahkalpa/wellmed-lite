@@ -39,6 +39,7 @@ class PatientController extends EnvironmentController{
                 "patient_type_service_id" => $patient_type_service_id,
                 'visit_registration' => [
                     'id' => null,
+                    'status' => 'PROCESSING',
                     "practitioner_evaluation" => [ //nullable, FOR HEAD DOCTOR
                         "practitioner_type" => "Employee", //nullable, default from config
                         "practitioner_id"=> $this->global_employee->getKey(), //GET FROM AUTOLIST - EMPLOYEE LIST (DOCTOR)

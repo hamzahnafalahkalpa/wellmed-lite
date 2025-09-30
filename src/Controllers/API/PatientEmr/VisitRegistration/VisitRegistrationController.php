@@ -13,18 +13,18 @@ class VisitRegistrationController extends EnvironmentController
         $medic_service_label = request()->search_medic_service_label ?? request()->flag ?? null;
         if (isset($medic_service_label)) $medic_service_label = Str::upper(Str::snake($medic_service_label));
         request()->merge([
-            'search_medic_service_label' => $medic_service_label,
+            // 'search_medic_service_label' => $medic_service_label,
         ]);
     }
 
     public function index(ViewRequest $request){
         return $this->getVisitRegistrationPaginate(function($query){
-            $query->when($this->isDoctor(),function($query){
-                $query->whereHas('practitionerEvaluation',function($query){
-                    $query->where('practitioner_type','Employee')
-                        ->where('practitioner_id',$this->global_employee->getKey());
-                });
-            });
+            // $query->when($this->isDoctor(),function($query){
+            //     $query->whereHas('practitionerEvaluation',function($query){
+            //         $query->where('practitioner_type','Employee')
+            //             ->where('practitioner_id',$this->global_employee->getKey());
+            //     });
+            // });
         });
     }
 

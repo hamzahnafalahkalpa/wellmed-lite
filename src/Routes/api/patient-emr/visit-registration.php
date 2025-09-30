@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Projects\Klinik\Controllers\API\PatientEmr\VisitRegistration\{
+use Projects\WellmedLite\Controllers\API\PatientEmr\VisitRegistration\{
     VisitExamination\VisitExaminationController,
     VisitExamination\Assessment\AssessmentController,
     VisitExamination\Examination\ExaminationController,
