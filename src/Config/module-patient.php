@@ -16,5 +16,9 @@ return [
         'student' => [
             'schema' => 'PatientPeople',
         ]
+    ],
+    'filesystem' => [
+        'asset_url'     => '/assets/',
+        'profile_photo' => 'profiles',
     ]
 ];

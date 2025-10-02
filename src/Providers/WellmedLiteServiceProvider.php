@@ -16,6 +16,7 @@ use Projects\WellmedLite\{
 use Hanafalah\LaravelSupport\Middlewares\PayloadMonitoring;
 use Hanafalah\MicroTenant\Contracts\Supports\ConnectionManager;
 use Hanafalah\MicroTenant\Facades\MicroTenant;
+use Illuminate\Support\Facades\Schema;
 use Projects\WellmedLite\Supports\ConnectionManager as SupportsConnectionManager;
 
 class WellmedLiteServiceProvider extends WellmedLiteEnvironment
@@ -40,50 +41,40 @@ class WellmedLiteServiceProvider extends WellmedLiteEnvironment
                     $this->__config_wellmed_lite = config('wellmed-lite');
                 },
                 'Provider' => function(){
-                    $model   = Facades\WellmedLite::myModel($this->TenantModel()->find(WellmedLite::ID));
-                    $this->bootedRegisters($model->packages, 'wellmed-lite', __DIR__.'/../'.$this->__config_wellmed_lite['libs']['migration'] ?? 'Migrations');
                     $this->registerOverideConfig('wellmed-lite',__DIR__.'/../'.$this->__config_wellmed_lite['libs']['config']);
                 }
             ]);
-            //  ->registerServices(function(){
-            //      $this->binds([
-            //         Contracts\WellmedLite::class => function(){
-            //             return new WellmedLite;
-            //         },
-            //         ConnectionManager::class => SupportsConnectionManager::class
-            //         //WorkspaceDTO\WorkspaceSettingData::class => WorkspaceSettingData::class
-            //     ]);
-            // });
     }
 
     public function boot(Kernel $kernel){        
         $kernel->pushMiddleware(PayloadMonitoring::class);
-        $model   = Facades\WellmedLite::myModel($this->TenantModel()->find(WellmedLite::ID));
-        if (isset($model)){
-            $this->deferredProviders($model);
-
-            tenancy()->initialize(WellmedLite::ID);
-            $this->registers([
-                '*',
-                // 'Config' => function() {
-                //     $this->__config_wellmed_lite = config('wellmed-lite');
-                // },
-                // 'Provider' => function() use ($model){
-                //     $this->bootedRegisters($model->packages, 'wellmed-lite', __DIR__.'/../'.$this->__config_wellmed_lite['libs']['migration'] ?? 'Migrations');
-                //     // $this->registerOverideConfig('wellmed-lite',__DIR__.'/../'.$this->__config_wellmed_lite['libs']['config']);
-                // },
-                'Model', 'Database'
-            ]);
-            $this->autoBinds();
-            $this->registerRouteService(RouteServiceProvider::class);
-
-            $this->app->singleton(PathRegistry::class, function () {
-                $registry = new PathRegistry();
-
-                $config = config("wellmed-lite");
-                foreach ($config['libs'] as $key => $lib) $registry->set($key, 'projects'.$lib);
-                return $registry;
-            });
+        try {
+            $tenant = $this->TenantModel()->where('flag','APP')->where('props->product_type','WELLMED_LITE')->first();
+            if (isset($tenant)){
+                $model  = Facades\WellmedLite::myModel($tenant);
+                $this->deferredProviders($model);
+    
+                $this->registers([
+                    '*', 
+                    'Provider' => function() use ($model){
+                        $this->bootedRegisters($model->packages, 'wellmed-lite', __DIR__.'/../'.$this->__config_wellmed_lite['libs']['migration'] ?? 'Migrations');
+                        $this->registerOverideConfig('wellmed-lite',__DIR__.'/../'.$this->__config_wellmed_lite['libs']['config']);
+                    },
+                    'Model', 'Database'
+                ]);
+                $this->autoBinds();
+                $this->registerRouteService(RouteServiceProvider::class);
+    
+                $this->app->singleton(PathRegistry::class, function() use ($tenant) {
+                    $registry = new PathRegistry();
+    
+                    $config = config("wellmed-lite");
+                    foreach ($config['libs'] as $key => $lib) $registry->set($key, 'projects'.$lib);
+                    
+                    return $registry;
+                });
+            }
+        } catch (\Throwable $th) {
         }
     }    
 }

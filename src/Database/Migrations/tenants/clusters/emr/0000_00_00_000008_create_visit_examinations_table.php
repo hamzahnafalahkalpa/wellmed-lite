@@ -43,8 +43,7 @@ return new class extends Migration
                         ->nullable(false)->index()
                         ->constrained()->cascadeOnUpdate()->cascadeOnDelete();
                 $table->foreignIdFor($patient::class)
-                        ->nullable(true)->index()
-                        ->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+                        ->nullable(true)->index();
                 $table->foreignIdFor($visit_patient::class)
                         ->nullable(false)->index()
                         ->constrained()->cascadeOnUpdate()->cascadeOnDelete();
