@@ -63,6 +63,8 @@ class WellmedLiteServiceProvider extends WellmedLiteEnvironment
                     'Model', 'Database'
                 ]);
                 $this->autoBinds();
+                tenancy()->end();
+                tenancy()->initialize($tenant);
                 $this->registerRouteService(RouteServiceProvider::class);
     
                 $this->app->singleton(PathRegistry::class, function() use ($tenant) {

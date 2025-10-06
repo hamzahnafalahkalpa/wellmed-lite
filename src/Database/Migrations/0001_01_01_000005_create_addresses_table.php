@@ -19,7 +19,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->__table = app(config('database.models.Address', WellmedAddress::class));
+        $this->__table = app(config('database.models.WellmedAddress', WellmedAddress::class));
     }
 
     /**
