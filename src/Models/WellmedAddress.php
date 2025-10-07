@@ -1,6 +1,6 @@
 <?php
 
-namespace Projects\WellmedLite\Models\Unicode;
+namespace Projects\WellmedLite\Models;
 
 use Hanafalah\ModuleRegional\Models\Regional\Address;
 
