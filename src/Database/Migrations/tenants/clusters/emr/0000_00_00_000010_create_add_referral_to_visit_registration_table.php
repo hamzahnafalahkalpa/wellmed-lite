@@ -1,13 +1,10 @@
 <?php
 
-use Hanafalah\ModuleMedicService\Models\MedicService;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Hanafalah\ModulePatient\Models\{
     EMR\VisitRegistration,
-    EMR\VisitPatient,
-    Patient\PatientType,
 };
 use Hanafalah\ModulePatient\Models\EMR\Referral;
 
