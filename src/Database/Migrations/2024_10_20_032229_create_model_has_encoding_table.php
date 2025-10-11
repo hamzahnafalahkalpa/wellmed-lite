@@ -14,7 +14,7 @@ return new class extends Migration
     private $__table;
 
     public function __construct(){
-        $this->__table = app(config('database.models.ModelHasEncoding', WellmedModelHasEncoding::class));
+        $this->__table = app(config('database.models.WellmedModelHasEncoding', WellmedModelHasEncoding::class));
     }
 
     public function up(): void
@@ -33,8 +33,8 @@ return new class extends Migration
                 $table->json('props')->nullable();
                 $table->timestamps();
 
-                $table->index(["reference_id", "reference_type"], 'encoding_ref');
-                $table->index(["reference_id", "reference_type", "encoding_id"], 'encoding_keys');
+                $table->index(["reference_id", "reference_type"], 'wellmed_encoding_ref');
+                $table->index(["reference_id", "reference_type", "encoding_id"], 'wellmed_encoding_keys');
             });
         });
     }

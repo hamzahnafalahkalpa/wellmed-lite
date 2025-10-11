@@ -35,6 +35,8 @@ return [
                     'CentralActivityStatus',
                     'MasterFeature',
                     'WellmedUnicode',
+                    'WellmedEncoding',
+                    'WellmedModelHasEncoding',
                     'Version',
                     'ModelHasFeature',
                     'WellmedPermission'

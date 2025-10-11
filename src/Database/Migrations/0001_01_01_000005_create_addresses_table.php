@@ -9,7 +9,7 @@ use Hanafalah\ModuleRegional\Models\Regional\{
     Subdistrict,
     Village
 };
-use Projects\WellmedLite\Models\Unicode\WellmedAddress;
+use Projects\WellmedLite\Models\WellmedAddress;
 
 return new class extends Migration
 {

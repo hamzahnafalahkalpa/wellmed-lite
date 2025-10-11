@@ -15,7 +15,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->__table = app(config('database.models.Encoding', WellmedEncoding::class));
+        $this->__table = app(config('database.models.WellmedEncoding', WellmedEncoding::class));
     }
     public function up(): void
     {

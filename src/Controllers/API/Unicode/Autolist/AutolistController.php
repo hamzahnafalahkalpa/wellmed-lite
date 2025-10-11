@@ -139,6 +139,17 @@ class AutolistController extends ApiController{
                     }
                 });
             break;
+            case 'Assessment':
+                $patient_id = request()->search_patient_id;
+                request()->merge([
+                    'search_patient_id' => null
+                ]);
+                return $this->callAutolist($morph,function($query) use ($patient_id){
+                    $query->whereHas('patientSummary',function($query) use ($patient_id){
+                        $query->where('patient_id',$patient_id);
+                    });
+                });
+            break;
             default:
                 return $this->callAutolist($morph);
             break;

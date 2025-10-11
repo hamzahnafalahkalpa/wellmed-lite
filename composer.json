@@ -29,7 +29,8 @@
         "wellmed-lite/ms-point-of-sale": "dev-main",
         "wellmed-lite/ms-scm": "dev-main",
         "wellmed-lite/ms-hr": "dev-main",
-        "wellmed-lite/ms-apotek": "dev-main"
+        "wellmed-lite/ms-apotek": "dev-main",
+        "hanafalah/satu-sehat": "dev-main"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -72,6 +73,13 @@
         "wellmed-lite/ms-hr": {
             "type": "path",
             "url": "../../features/ms-hr",
+            "options": {
+                "symlink": true
+            }
+        },
+        "hanfalah/satu-sehat": {
+            "type": "path",
+            "url": "../../repositories/satu-sehat",
             "options": {
                 "symlink": true
             }
