@@ -6,11 +6,6 @@ use Illuminate\Http\Request;
 
 class AuthController extends EnvironmentController{
     public function store(Request $request){
-        return $this->__oauth->generateToken(
-            $this->requestDTO(
-                config('app.contracts.OAuth2Data'),
-                $request->all()
-            )
-        );
+        return $this->__oauth->storeOAuth2();
     }
 }
