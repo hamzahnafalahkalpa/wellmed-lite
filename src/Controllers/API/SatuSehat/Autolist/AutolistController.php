@@ -17,8 +17,12 @@ class AutolistController extends ApiController{
 
     public function index(Request $request){
         $morph = Str::studly(request()->morph);
+        $all = request()->all();
         switch ($morph) {
             default:
+                request()->replace([
+                    'params' => $all
+                ]);
                 return $this->callAutolist($morph);
             break;
         }

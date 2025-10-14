@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Projects\WellmedLite\Controllers\API\Setting\{
     PaymentMethodController,
+    TariffComponentController
 };
 
 Route::group([
@@ -10,4 +11,5 @@ Route::group([
     'as' => 'finance.'
 ],function(){
     Route::apiResource('/payment-method',PaymentMethodController::class)->parameters(['payment-method' => 'id']);
+    Route::apiResource('/tariff-component',TariffComponentController::class)->parameters(['tariff-component' => 'id']);
 });
