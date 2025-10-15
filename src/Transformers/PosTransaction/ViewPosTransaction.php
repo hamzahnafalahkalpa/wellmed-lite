@@ -20,7 +20,7 @@ class ViewPosTransaction extends ApiResource
             'uuid'              => $this->uuid,
             'transaction_code'  => $this->transaction_code,
             'consument_id'      => $this->prop_consument['id'],
-            'consument'         => $this->prop_consument['reference'],
+            // 'consument'         => $this->prop_consument['reference'],
             'reference_type'    => $this->reference_type,
             'reference'         => $this->relationValidation('reference', function () {
                 return $this->propNil($this->reference->toViewApi()->resolve(),'transaction');
@@ -31,6 +31,16 @@ class ViewPosTransaction extends ApiResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
+        if ($this->relationloaded('consument') && isset($this->consument)) {
+            $consument = $this->consument;
+            if (isset($consument->reference)){
+                $arr['consument'] = $consument->reference->toShowApi()->resolve();
+            }else{
+                $arr['consument'] = $consument->toShowApi()->resolve();
+            }
+        }else{
+            $arr['consument'] = $this->prop_consument['reference'];
+        }
 
         return $arr;
     }
