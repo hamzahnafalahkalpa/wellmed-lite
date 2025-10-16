@@ -54,12 +54,15 @@ class WellmedLiteServiceProvider extends WellmedLiteEnvironment
         try {
             $tenant = $this->TenantModel()->where('flag','APP')->where('props->product_type','WELLMED_LITE')->first();
             if (isset($tenant)){
-                // MicroTenant::tenantImpersonate($tenant);
                 Event::listen(\Laravel\Octane\Events\RequestReceived::class, function ($event) use ($tenant) {
                     MicroTenant::tenantImpersonate($tenant);
-                    ApiAccess::init()->accessOnLogin(function ($api_access) {
-                        Auth::setUser($api_access->getUser());
-                    });
+                    try {
+                        ApiAccess::init()->accessOnLogin(function ($api_access) {
+                            Auth::setUser($api_access->getUser());
+                        });
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                    }
                 });
 
                 $model  = Facades\WellmedLite::myModel($tenant);
