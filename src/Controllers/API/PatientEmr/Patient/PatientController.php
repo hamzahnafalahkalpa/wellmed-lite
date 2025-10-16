@@ -9,11 +9,13 @@ use Projects\WellmedLite\Requests\API\PatientEmr\Patient\{
 class PatientController extends EnvironmentController{
 
     public function index(ViewRequest $request){
+        $this->userAttempt();
         $this->recombineRequest();
         return $this->__schema->viewPatientPaginate();
     }
 
     public function store(StoreRequest $request){
+        $this->userAttempt();
         $possibleTypes = ['people'];
         $reference = null;
         $referenceType = null;
@@ -60,10 +62,12 @@ class PatientController extends EnvironmentController{
     }
 
     public function show(ShowRequest $request){
+        $this->userAttempt();
         return $this->__schema->showPatient();
     }
 
     public function destroy(DeleteRequest $request){
+        $this->userAttempt();
         return $this->__schema->deletePatient();
     }
 }

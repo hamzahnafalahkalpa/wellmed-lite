@@ -28,7 +28,6 @@ class EnvironmentController extends ApiBaseController{
     )
     {
         parent::__construct();   
-        $this->userAttempt();
     }
 
     protected function commonConditional($query){
@@ -36,7 +35,7 @@ class EnvironmentController extends ApiBaseController{
     }
 
     protected function commonRequest(){
-        
+        $this->userAttempt();
     }
 
     protected function isEmployee(): bool{

@@ -12,7 +12,6 @@ class BaseWalletEnvironmentController extends ApiController{
         public Deposit $__deposit_schema,
     ){
         parent::__construct();
-        $this->userAttempt();
     }
 
     protected function commonConditional($query){
@@ -20,6 +19,7 @@ class BaseWalletEnvironmentController extends ApiController{
     }
 
     protected function commonRequest(){
+        $this->userAttempt();
         if (isset($this->global_employee)){
             request()->merge([
                 'author_type' => $this->global_employee->getMorphClass(),

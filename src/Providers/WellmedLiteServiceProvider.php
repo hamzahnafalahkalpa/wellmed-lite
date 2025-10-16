@@ -50,47 +50,49 @@ class WellmedLiteServiceProvider extends WellmedLiteEnvironment
     }
 
     public function boot(Kernel $kernel){        
-        $kernel->pushMiddleware(PayloadMonitoring::class);
-        try {
-            $tenant = $this->TenantModel()->where('flag','APP')->where('props->product_type','WELLMED_LITE')->first();
-            if (isset($tenant)){
-                Event::listen(\Laravel\Octane\Events\RequestReceived::class, function ($event) use ($tenant) {
+        // $kernel->pushMiddleware(PayloadMonitoring::class);
+        $this->app->booted(function(){
+            try {
+                $tenant = $this->TenantModel()->where('flag','APP')->where('props->product_type','WELLMED_LITE')->first();
+                if (isset($tenant)){
                     MicroTenant::tenantImpersonate($tenant);
-                    try {
-                        ApiAccess::init()->accessOnLogin(function ($api_access) {
-                            Auth::setUser($api_access->getUser());
-                        });
-                    } catch (\Throwable $th) {
-                        //throw $th;
-                    }
-                });
-
-                $model  = Facades\WellmedLite::myModel($tenant);
-                $this->deferredProviders($model);
+                    // Event::listen(\Laravel\Octane\Events\RequestReceived::class, function ($event) use ($tenant) {
+                    //     try {
+                    //         ApiAccess::init()->accessOnLogin(function ($api_access) {
+                    //             Auth::setUser($api_access->getUser());
+                    //         });
+                    //     } catch (\Throwable $th) {
+                    //         //throw $th;
+                    //     }
+                    // });
     
-                $this->registers([
-                    '*', 
-                    'Provider' => function() use ($model){
-                        $this->bootedRegisters($model->packages, 'wellmed-lite', __DIR__.'/../'.$this->__config_wellmed_lite['libs']['migration'] ?? 'Migrations');
-                        $this->registerOverideConfig('wellmed-lite',__DIR__.'/../'.$this->__config_wellmed_lite['libs']['config']);
-                    },
-                    'Model', 'Database'
-                ]);
-                $this->autoBinds();
-                tenancy()->end();
-                tenancy()->initialize($tenant);
-                $this->registerRouteService(RouteServiceProvider::class);
-    
-                $this->app->singleton(PathRegistry::class, function() use ($tenant) {
-                    $registry = new PathRegistry();
-    
-                    $config = config("wellmed-lite");
-                    foreach ($config['libs'] as $key => $lib) $registry->set($key, 'projects'.$lib);
-                    
-                    return $registry;
-                });
+                    $model  = Facades\WellmedLite::myModel($tenant);
+                    $this->deferredProviders($model);
+        
+                    $this->registers([
+                        '*', 
+                        'Provider' => function() use ($model){
+                            $this->bootedRegisters($model->packages, 'wellmed-lite', __DIR__.'/../'.$this->__config_wellmed_lite['libs']['migration'] ?? 'Migrations');
+                            $this->registerOverideConfig('wellmed-lite',__DIR__.'/../'.$this->__config_wellmed_lite['libs']['config']);
+                        },
+                        'Model', 'Database'
+                    ]);
+                    $this->autoBinds();
+                    // tenancy()->end();
+                    // tenancy()->initialize($tenant);
+                    $this->registerRouteService(RouteServiceProvider::class);
+        
+                    $this->app->singleton(PathRegistry::class, function() use ($tenant) {
+                        $registry = new PathRegistry();
+        
+                        $config = config("wellmed-lite");
+                        foreach ($config['libs'] as $key => $lib) $registry->set($key, 'projects'.$lib);
+                        
+                        return $registry;
+                    });
+                }
+            } catch (\Throwable $th) {
             }
-        } catch (\Throwable $th) {
-        }
+        });
     }    
 }

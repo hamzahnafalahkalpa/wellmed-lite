@@ -11,7 +11,6 @@ class EnvironmentController extends ApiBaseController{
         protected Patient $__schema,
     ){
         parent::__construct();
-        $this->userAttempt();
     }
 
     protected function recombineRequest(){

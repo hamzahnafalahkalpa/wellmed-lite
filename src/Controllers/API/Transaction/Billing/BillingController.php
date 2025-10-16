@@ -8,6 +8,7 @@ use Projects\WellmedLite\Requests\API\Transaction\Billing\{
 
 class BillingController extends EnvironmentController{
     protected function commonConditional($query){
+        parent::commonConditional($query);
         $query->whereNotNull('reported_at');
     }
 

@@ -8,6 +8,7 @@ use Projects\WellmedLite\Requests\API\Transaction\Invoice\{
 
 class InvoiceController extends EnvironmentController{
     protected function commonConditional($query){
+        parent::commonConditional($query);
         $query->whereNotNull('reported_at')->where('props->is_deferred',false);
     }
 

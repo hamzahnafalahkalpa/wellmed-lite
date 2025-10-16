@@ -14,7 +14,6 @@ class EnvironmentController extends ApiController{
         public PosTransaction $__pos_schema
     ){
         parent::__construct();
-        $this->userAttempt();
     }
 
     protected function commonConditional($query){
@@ -22,7 +21,7 @@ class EnvironmentController extends ApiController{
     }
 
     protected function commonRequest(){
-        
+        $this->userAttempt();
     }
 
     protected function getTransactionPaginate(?callable $callback = null){        

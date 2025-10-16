@@ -10,11 +10,12 @@ use Illuminate\Support\Str;
 class VisitRegistrationController extends EnvironmentController
 {
     protected function commonRequest(){
+        parent::commonRequest();
         $medic_service_label = request()->search_medic_service_label ?? request()->flag ?? null;
         if (isset($medic_service_label)) $medic_service_label = Str::upper(Str::snake($medic_service_label));
-        request()->merge([
-            // 'search_medic_service_label' => $medic_service_label,
-        ]);
+        // request()->merge([
+        //     // 'search_medic_service_label' => $medic_service_label,
+        // ]);
     }
 
     public function index(ViewRequest $request){
@@ -26,6 +27,7 @@ class VisitRegistrationController extends EnvironmentController
             //     });
             // });
         });
+
     }
 
     public function show(ShowRequest $request){
