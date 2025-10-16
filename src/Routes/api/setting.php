@@ -20,6 +20,7 @@ Route::group([
     'prefix' => 'setting',
     'as' => 'setting.'
 ],function(){
+    include __DIR__.'/setting/acl.php'; 
     include __DIR__.'/setting/faskes-service.php'; 
     include __DIR__.'/setting/finance.php';
     include __DIR__.'/setting/general-setting.php';

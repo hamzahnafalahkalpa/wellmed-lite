@@ -20,4 +20,8 @@ class PatientController extends ApiController{
         ]);
         return $this->__patient_schema->storePatientSatuSehat();
     }
+
+    public function update(Request $request){
+        return $this->__patient_schema->updatePatientSatuSehat();
+    }
 }
