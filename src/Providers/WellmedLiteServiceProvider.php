@@ -55,17 +55,6 @@ class WellmedLiteServiceProvider extends WellmedLiteEnvironment
             try {
                 $tenant = $this->TenantModel()->where('flag','APP')->where('props->product_type','WELLMED_LITE')->first();
                 if (isset($tenant)){
-                    MicroTenant::tenantImpersonate($tenant);
-                    // Event::listen(\Laravel\Octane\Events\RequestReceived::class, function ($event) use ($tenant) {
-                    //     try {
-                    //         ApiAccess::init()->accessOnLogin(function ($api_access) {
-                    //             Auth::setUser($api_access->getUser());
-                    //         });
-                    //     } catch (\Throwable $th) {
-                    //         //throw $th;
-                    //     }
-                    // });
-    
                     $model  = Facades\WellmedLite::myModel($tenant);
                     $this->deferredProviders($model);
         
@@ -78,8 +67,7 @@ class WellmedLiteServiceProvider extends WellmedLiteEnvironment
                         'Model', 'Database'
                     ]);
                     $this->autoBinds();
-                    // tenancy()->end();
-                    // tenancy()->initialize($tenant);
+                    MicroTenant::tenantImpersonate($tenant);
                     $this->registerRouteService(RouteServiceProvider::class);
         
                     $this->app->singleton(PathRegistry::class, function() use ($tenant) {

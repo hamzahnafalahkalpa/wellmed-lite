@@ -18,7 +18,7 @@ class EnvironmentController extends EnvEnvironmentController
     }
 
     protected function storeExamination(){
-
+        $this->commonRequest();
         return $this->__visit_examination_schema->storeVisitExamination();
     }
 
