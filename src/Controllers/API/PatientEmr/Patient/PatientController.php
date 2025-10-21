@@ -58,6 +58,9 @@ class PatientController extends EnvironmentController{
         }
 
         request()->merge($data);
+        $data = request()->all();
+        unset($data['visit_examination']);
+        request()->replace($data);
         return $this->__schema->storePatient();
     }
 
