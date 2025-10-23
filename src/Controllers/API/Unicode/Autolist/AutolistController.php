@@ -55,7 +55,10 @@ class AutolistController extends ApiController{
                 });
             break;
             case 'MedicService':
-                return $this->callAutolist($morph,function($query){
+                $schema = app(config('app.contracts.'.$morph));
+                $is_for_registration = isset(request()->is_for_visit_registration) && request()->is_for_visit_registration;
+                if ($is_for_registration) $schema->setIsParentOnly(false);
+                return $schema->autolist(request()->type,function($query) use ($is_for_registration){
                     $query->when(isset(request()->is_for_referral) && request()->is_for_referral,function($query){
                         $query->whereIn('label',[
                             MedicServiceLabel::OUTPATIENT->value,
@@ -67,11 +70,27 @@ class AutolistController extends ApiController{
                             MedicServiceLabel::EMERGENCY_UNIT->value,
                             MedicServiceLabel::TREATMENT_ROOM->value
                         ]);
+                    })->when($is_for_registration,function($query){
+                        $query->whereIn('label',[
+                            MedicServiceLabel::INPATIENT->value,
+                            MedicServiceLabel::MCU->value,
+                            MedicServiceLabel::RADIOLOGY->value,
+                            MedicServiceLabel::VERLOS_KAMER->value,
+                            MedicServiceLabel::EMERGENCY_UNIT->value,
+                            MedicServiceLabel::TREATMENT_ROOM->value,
+                            'UMUM', 'ORTHOPEDI', 'SUNAT', 'KECANTIKAN', 'MATA', 'THT', 'INTERNIS', 'GIGI & MULUT', 'KIA', 'LANSIA', 'ADMIN', 'VACCINE', 'MTBS'
+                        ]);
                     })->when(isset(request()->exclude_id),function($query){
                         $ids = $this->mustArray(request()->exclude_id);
                         $query->whereNotIn('id',$ids);
                     });
                 });
+            break;
+            case 'HeadToToe':
+                $schema = app(config('app.contracts.'.$morph));
+                $is_flatten = isset(request()->is_flatten) && request()->is_flatten;
+                if ($is_flatten) $schema->setIsParentOnly(false);
+                return $schema->autolist(request()->type);
             break;
             case 'Treatment':
                 return $this->callAutolist($morph,function($query){
