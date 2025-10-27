@@ -16,5 +16,6 @@ Route::group([
     "prefix" => "/item-management",
     "as"     => "item-management.",
 ],function() {
-    include_once(__DIR__."/item-management/medical-item.php");
+    include_once(__DIR__."/item-management/item.php");
+    // include_once(__DIR__."/item-management/medical-item.php");
 });

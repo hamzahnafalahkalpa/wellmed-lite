@@ -1,11 +1,12 @@
 <?php
 
-namespace Projects\WellmedLite\Requests\API\ItemManagement\MedicalItem;
+namespace Projects\WellmedLite\Requests\API\ItemManagement\Item;
 
 use Hanafalah\LaravelSupport\Requests\FormRequest;
-class DeleteRequest extends FormRequest
+
+class ShowRequest extends FormRequest
 {
-  protected $__entity = 'MedicalItem';
+  protected $__entity = 'Item';
 
   public function authorize()
   {

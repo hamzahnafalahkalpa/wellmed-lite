@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Projects\WellmedLite\Controllers\API\ItemManagement\MedicalItem\MedicalItemController;
+use Projects\WellmedLite\Controllers\API\ItemManagement\Item\ItemController;
 
-Route::apiResource('/item',MedicalItemController::class)->parameters(['item' => 'id']);
+Route::apiResource('/item',ItemController::class)->parameters(['item' => 'id']);
 
