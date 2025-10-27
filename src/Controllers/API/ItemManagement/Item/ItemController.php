@@ -16,21 +16,23 @@ class ItemController extends ApiController{
     }
 
     public function index(ViewRequest $request) {
-        $flag = request()->flag ?? [
-            $this->MedicineModelMorph(),
-            $this->MedicToolModelMorph()
-        ];
-        request()->merge([
-            'flag' => $flag
-        ]);
+        // $flag = request()->flag ?? [
+        //     $this->MedicineModelMorph(),
+        //     $this->MedicToolModelMorph()
+        // ];
+        // request()->merge([
+        //     'flag' => $flag
+        // ]);
         return $this->__schema->viewItemPaginate();
     }
 
     public function store(StoreRequest $request){
-        $data = request()->all();
-        $reference = $data['medicine'] ?? $data['medic_tool'] ?? $data['reagent'];
-        $data['reference'] = $reference;
-        request()->replade($data);
+        request()->merge([
+            'reference' => [
+                'id' => request()->reference_id ?? null,
+                'name' => request()->name ?? '',
+            ]
+        ]);
         return $this->__schema->storeItem();
     }
 
