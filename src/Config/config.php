@@ -9,7 +9,7 @@ return [
     "service_name"  => "WellmedLite",
     "paths"         => [
         "local_path"   => 'projects',
-        "base_path"    => __DIR__.'\\..\\'
+        "base_path"    => __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR
     ],
     "libs"           => [
         'migration' => 'Database/Migrations',

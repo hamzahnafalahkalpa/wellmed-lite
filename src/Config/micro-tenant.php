@@ -6,6 +6,9 @@ return [
             'prefix' => 'lite_',
             'suffix' => ''
         ],
+        'laravel-support' => [
+            'service_cache'  => \Projects\WellmedLite\Contracts\Supports\ServiceCache::class,
+        ],
         'model_connections' => [
             'central'        => [
                 'models' => [

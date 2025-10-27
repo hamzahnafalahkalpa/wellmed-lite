@@ -12,12 +12,12 @@ abstract class ApiController extends ControllersApiController
 
     public function __construct(){
         config(['micro-tenant.use-db-name' => true]);
-        if (app()->environment('local')) {
-            $commands = Artisan::all();
-            if (array_key_exists('octane:reload-workers', $commands)) {
-                Artisan::call('octane:reload-workers');
-            }
-        }
+        // if (app()->environment('local')) {
+        //     $commands = Artisan::all();
+        //     if (array_key_exists('octane:reload-workers', $commands)) {
+        //         Artisan::call('octane:reload-workers');
+        //     }
+        // }
 
         parent::__construct();
     }

@@ -2,24 +2,17 @@
 
 namespace Projects\WellmedLite\Providers;
 
-use Hanafalah\ApiHelper\Facades\ApiAccess;
-use Illuminate\Foundation\Http\Kernel;
 use Hanafalah\LaravelSupport\{
     Concerns\NowYouSeeMe,
     Supports\PathRegistry
 };
-use Illuminate\Support\Str;
 use Projects\WellmedLite\{
     WellmedLite,
     Contracts,
     Facades
 };
-use Hanafalah\LaravelSupport\Middlewares\PayloadMonitoring;
 use Hanafalah\MicroTenant\Contracts\Supports\ConnectionManager;
 use Hanafalah\MicroTenant\Facades\MicroTenant;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Schema;
 use Projects\WellmedLite\Supports\ConnectionManager as SupportsConnectionManager;
 
 class WellmedLiteServiceProvider extends WellmedLiteEnvironment
@@ -29,7 +22,7 @@ class WellmedLiteServiceProvider extends WellmedLiteEnvironment
     public function register()
     {
         $this->registerMainClass(WellmedLite::class,false)
-             ->registerCommandService(CommandServiceProvider::class)
+            ->registerCommandService(CommandServiceProvider::class)
             ->registers([
                 'Services' => function(){
                     $this->binds([
@@ -49,15 +42,17 @@ class WellmedLiteServiceProvider extends WellmedLiteEnvironment
             ]);
     }
 
-    public function boot(Kernel $kernel){        
+    public function boot(){        
+        $this->registerModel();
         // $kernel->pushMiddleware(PayloadMonitoring::class);
         $this->app->booted(function(){
             try {
                 $tenant = $this->TenantModel()->where('flag','APP')->where('props->product_type','WELLMED_LITE')->first();
+
                 if (isset($tenant)){
                     $model  = Facades\WellmedLite::myModel($tenant);
-                    $this->deferredProviders($model);
-        
+                    $cache = app(config('laravel-support.service_cache'))->getConfigCache();
+
                     $this->registers([
                         '*', 
                         'Provider' => function() use ($model){
@@ -66,10 +61,11 @@ class WellmedLiteServiceProvider extends WellmedLiteEnvironment
                         },
                         'Model', 'Database'
                     ]);
-                    $this->autoBinds();
-                    MicroTenant::tenantImpersonate($tenant);
+                    MicroTenant::impersonate($tenant,false);    
+                    // $this->autoBinds();
+                    ($this->checkCacheConfig('config-cache')) ? $this->multipleBinds(config('app.contracts')) : $this->autoBinds();
                     $this->registerRouteService(RouteServiceProvider::class);
-        
+
                     $this->app->singleton(PathRegistry::class, function() use ($tenant) {
                         $registry = new PathRegistry();
         
