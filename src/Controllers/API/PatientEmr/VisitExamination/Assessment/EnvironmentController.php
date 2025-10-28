@@ -15,6 +15,13 @@ class EnvironmentController extends EnvEnvironmentController
             'search_examination_type' => request()->examination_type ?? 'VisitExamination',
             'search_examination_id' => request()->patient_summary_id ?? request()->visit_examination_id,
         ]);
+        if (isset(request()->visit_examination_id)) {
+            $visit_examination = $this->VisitExaminationModel()->findOrFail(request()->visit_examination_id);
+            request()->merge([
+                'patient_id' => $visit_examination->patient_id,
+            ]);
+        }
+
         $data = $this->__assessment_schema->showAssessment();
         if(!isset($data)) {
             $model = $this->{$morph.'Model'}();
