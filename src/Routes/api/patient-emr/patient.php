@@ -17,6 +17,9 @@ use Projects\WellmedLite\Controllers\API\PatientEmr\Patient\VisitRegistration\{
     Referral\ReferralController as VRReferralController,
     VisitRegistrationController as VRVisitRegistrationController
 };
+use Projects\WellmedLite\Controllers\API\PatientEmr\Patient\VisitExamination\{
+    VisitExaminationController as PatientVisitExaminationController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -71,4 +74,6 @@ Route::group([
             Route::apiResource('/{morph}/assessment',VRAssessmentController::class)->parameters(['assessment' => 'id'])->only(['store','show','index']);
         });
     });
+
+    Route::apiResource('/visit-examination',PatientVisitExaminationController::class)->parameters(['visit-examination' => 'id']);
 });
