@@ -2,5 +2,6 @@
 
 return [
     'survey_flag_key' => 'label',
-    'warehouse' => 'Room'
+    'warehouse' => 'Room',
+    'transaction_item' => 'PosTransactionItem'
 ];
