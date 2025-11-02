@@ -10,7 +10,12 @@ class EnvironmentController extends EnvEnvironmentController
         $this->userAttempt();
         $examination = request()->examination;
         if (isset($examination)){
-            $examination['practitioner_id'] = $this->global_employee->getKey() ?? null;
+            if (isset($this->global_employee)){
+                $examination['practitioner_evaluations'][] = [
+                    'practitioner_type' => $this->global_employee->getMorphClass(),
+                    'practitioner_id' => $this->global_employee->getKey() ?? null
+                ];
+            }
             request()->merge([
                 'examination' => $examination
             ]);
@@ -70,10 +75,10 @@ class EnvironmentController extends EnvEnvironmentController
             $examination['pharmacy_id']  = $pharmacy_id ?? null;
             $examination['pharmacy_type'] = config('module-examination.warehouse') ?? 'Room';
             request()->merge(['examination' => $examination]);
-            return $this->__visit_examination_schema->conditionals(function($query) use ($callback){
-                $this->commonConditional($query);
-                $callback($query);
-            })->storeVisitExamination();
         }
+        return $this->__visit_examination_schema->conditionals(function($query) use ($callback){
+            $this->commonConditional($query);
+            $callback($query);
+        })->storeVisitExamination();
     }
 }

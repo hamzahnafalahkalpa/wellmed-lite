@@ -15,7 +15,7 @@ class PointOfSaleController extends EnvironmentController{
         if (isset($billing)){
             $billing['author_type']  ??= $this->global_employee->getMorphClass();   
             $billing['author_id']    ??= $this->global_employee->getKey();   
-            $billing['cashier_type'] ??= $this->global_room?->getMorphClass();   
+            $billing['cashier_type'] ??= $this->global_room?->getMorphClass() ?? 'Room';   
             $billing['cashier_id']   ??= $this->global_room?->getKey();   
         }
         request()->merge([

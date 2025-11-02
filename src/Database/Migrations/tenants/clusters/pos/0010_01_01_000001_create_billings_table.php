@@ -38,8 +38,8 @@ return new class extends Migration
                 $table->foreignIdFor($transaction::class,'has_transaction_id')->nullable()->index();
                 $table->string('author_type', 50)->nullable(false);
                 $table->string('author_id', 36)->nullable(false);
-                $table->string('cashier_type', 50)->nullable(false);
-                $table->string('cashier_id', 36)->nullable(false);
+                $table->string('cashier_type', 50)->nullable(true);
+                $table->string('cashier_id', 36)->nullable(true);
                 $table->string('status', 50)->default(Status::DRAFT->value)->nullable(false);
                 $table->timestamp('reported_at')->nullable();
                 $table->json('props')->nullable();

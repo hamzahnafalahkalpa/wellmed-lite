@@ -36,17 +36,21 @@ class PatientController extends EnvironmentController{
             $patient_type_service_id = $visit_examination['patient_type_service_id'] ?? $this->PatientTypeServiceModel()->where('label','UMUM')->firstOrFail()->getKey();
             $medic_service_id        = $visit_examination['medic_service_id'] ?? $this->MedicServiceModel()->where('label','UMUM')->firstOrFail()->getKey();
 
+            $practitioner = [ //nullable, FOR HEAD DOCTOR
+                "practitioner_type" => "Employee", //nullable, default from config
+                "practitioner_id"=> $this->global_employee->getKey(), //GET FROM AUTOLIST - EMPLOYEE LIST (DOCTOR)
+                "as_pic"=> true //nullable, default false, in:true/false
+            ];
+            if (isset($visit_examination['examination'])){
+                $visit_examination['practitioner_evaluations'][] = $practitioner;
+            }
             $visit_patient = [
                 'id' => null,
                 "patient_type_service_id" => $patient_type_service_id,
                 'visit_registration' => [
                     'id' => null,
                     'status' => 'PROCESSING',
-                    "practitioner_evaluation" => [ //nullable, FOR HEAD DOCTOR
-                        "practitioner_type" => "Employee", //nullable, default from config
-                        "practitioner_id"=> $this->global_employee->getKey(), //GET FROM AUTOLIST - EMPLOYEE LIST (DOCTOR)
-                        "as_pic"=> true //nullable, default false, in:true/false
-                    ],
+                    "practitioner_evaluation" => $practitioner,
                     "medic_service_id"  => $medic_service_id,
                     'visit_examination' => $visit_examination
                 ]
