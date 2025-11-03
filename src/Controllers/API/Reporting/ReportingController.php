@@ -2,7 +2,6 @@
 
 namespace Projects\WellmedLite\Controllers\API\Reporting;
 
-use Hanafalah\LaravelPermission\Contracts\Schemas\Menu;
 use Hanafalah\ModulePayment\Contracts\Schemas\PosTransaction;
 use Hanafalah\ModuleTransaction\Contracts\Schemas\Transaction;
 use Projects\WellmedLite\Controllers\API\ApiController;
@@ -20,6 +19,6 @@ class ReportingController extends ApiController{
 
     public function index(ViewRequest $request){
         $this->userAttempt();
-        return [];
+        return collect();
     }
 }

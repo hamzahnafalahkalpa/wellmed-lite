@@ -15,4 +15,4 @@ use Projects\WellmedLite\Controllers\API\Reporting\{
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::apiResource('/reporting',ReportingController::class)->only('index');
+Route::apiResource('/reporting/{reporting_type}',ReportingController::class)->only('index');

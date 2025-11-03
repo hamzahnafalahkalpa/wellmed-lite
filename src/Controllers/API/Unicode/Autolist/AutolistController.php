@@ -158,6 +158,39 @@ class AutolistController extends ApiController{
                     }
                 });
             break;
+            case 'Patient':
+                if (isset(request()->credential)){
+                    $credential = request()->credential;
+                    switch ($credential) {
+                        case 'nik':
+                            request()->replace([
+                                'search_nik' => request()->search_value
+                            ]);
+                        break;
+                        case 'nik_ibu':
+                            request()->replace([
+                                'search_nik_ibu' => request()->search_value
+                            ]);
+                        break;
+                        case 'passport':
+                            request()->replace([
+                                'search_passport' => request()->search_value
+                            ]);
+                        break;
+                    }
+                    $result = $this->callAutolist($morph);
+                    if (count($result) > 0){
+                        $result = $result[0];
+                        return [
+                            'id'         => $result['id'],
+                            'ihs_number' => $result['card_identity']['ihs_number'] ?? null
+                        ];
+                    }
+                    return $result;
+                }else{
+                    return $this->callAutolist($morph);
+                }
+            break;
             case 'Assessment':
                 $patient_id = request()->search_patient_id;
                 request()->merge([
