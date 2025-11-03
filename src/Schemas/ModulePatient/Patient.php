@@ -61,16 +61,23 @@ class Patient extends SchemasPatient implements ModulePatientPatient
             }
         }
         $form_payload['address'] = array_merge($addresses,$new_address);
-        // $this->schemaContract('patient_satu_sehat')->useAccessToSatuSehat()
-        //     ->prepareStorePatientSatuSehat(
-        //     $this->requestDTO(
-        //         config('app.contracts.PatientSatuSehatData'),[
-        //             'model' => $patient,
-        //             'form'  => $form_payload
-        //         ]
-        //     )
-        // );
-
+        try {
+            $patient_satu_sehat = $this->schemaContract('patient_satu_sehat')->useAccessToSatuSehat()
+                ->prepareStorePatientSatuSehat(
+                $this->requestDTO(
+                    config('app.contracts.PatientSatuSehatData'),[
+                        'model' => $patient,
+                        'form'  => $form_payload
+                    ]
+                )
+            );
+            $prop_card_identity = $patient->prop_card_identity ?? [];
+            $prop_card_identity['ihs_number'] = $patient_satu_sehat->response['id'] ?? null;
+            $patient->setAttribute('prop_card_identity',$prop_card_identity);
+            $patient->save();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
         return $patient;
     }
 }
