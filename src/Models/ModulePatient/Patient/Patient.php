@@ -20,4 +20,6 @@ class Patient extends PatientPatient
 
     public function getViewResource(){return ViewPatient::class;}
     public function getShowResource(){return ShowPatient::class;}
+
+    public function patientSatuSehat(){return $this->morphOneModel('PatientSatuSehat','reference');}
 }

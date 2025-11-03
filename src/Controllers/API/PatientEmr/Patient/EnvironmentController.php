@@ -2,7 +2,7 @@
 
 namespace Projects\WellmedLite\Controllers\API\PatientEmr\Patient;
 
-use Hanafalah\ModulePatient\Contracts\Schemas\Patient;
+use Projects\WellmedLite\Contracts\Schemas\ModulePatient\Patient;
 use Projects\WellmedLite\Controllers\API\ApiController as ApiBaseController;
 
 class EnvironmentController extends ApiBaseController{
