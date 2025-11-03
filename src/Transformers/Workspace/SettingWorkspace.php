@@ -10,14 +10,8 @@ class SettingWorkspace extends WorkspaceSettingWorkspace
     {
         $arr = [
             "registration"  => [
-                "is_examination"=> $this['registration']['is_examination'],
-                "examination"=> [
-                    "subject" => $this['registration']['examination']['subject'],
-                    "object" => $this['registration']['examination']['object'],
-                    "assessment" => $this['registration']['examination']['assessment'],
-                    "planning" => $this['registration']['examination']['planning']
-                ],
-                "direct_pos"=> $this['registration']['direct_pos']
+                "is_examination"=> $this['registration']['is_examination'] ?? true,
+                "direct_pos"=> $this['registration']['direct_pos'] ?? true
             ]
         ];
         $arr = $this->mergeArray(parent::toArray($request), $arr);
