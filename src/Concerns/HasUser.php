@@ -35,9 +35,9 @@ trait HasUser
                     if (isset($this->global_employee->room)) $this->global_room = $this->global_employee->room;
                 }
     
-                $tenant = &$user_reference->workspace;
+                $tenant = $user_reference->workspace;
                 if(isset($tenant)) {
-                    $workspace = &$tenant->workspace;
+                    $workspace = $tenant->workspace;
                     $this->global_workspace = $workspace;
     
                     if (isset($workspace->setting)){
