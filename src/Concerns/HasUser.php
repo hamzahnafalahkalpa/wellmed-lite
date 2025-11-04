@@ -37,7 +37,7 @@ trait HasUser
     
                 $tenant = $user_reference->workspace;
                 if(isset($tenant)) {
-                    $workspace = $tenant->workspace;
+                    $workspace = $tenant->reference;
                     $this->global_workspace = $workspace;
     
                     if (isset($workspace->setting)){
