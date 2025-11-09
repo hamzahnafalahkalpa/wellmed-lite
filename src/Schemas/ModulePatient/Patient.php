@@ -11,6 +11,10 @@ class Patient extends SchemasPatient implements ModulePatientPatient
 {
     protected function prepareStore(PatientData &$patient_dto){   
         $patient = parent::prepareStore($patient_dto);
+        $patient_dto->props['integration'] = $patient->integration ?? $this->requestDTO(
+            config('app.contracts.IntegrationData'),[
+            ]
+        );
         $patient->load([
             'patientSatuSehat',
             'reference.addresses' => function($query){
@@ -77,6 +81,9 @@ class Patient extends SchemasPatient implements ModulePatientPatient
             $patient->save();
         } catch (\Throwable $th) {
         }
+
+        $this->fillingProps($patient, $patient_dto->props);
+        $patient->save();
         return $patient;
     }
 }

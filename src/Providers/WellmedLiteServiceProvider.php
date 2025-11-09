@@ -75,7 +75,6 @@ class WellmedLiteServiceProvider extends WellmedLiteEnvironment
                     });
                 }
             } catch (\Throwable $th) {
-                dd($th);
             }
         });
     }    

@@ -11,7 +11,8 @@ class ViewPatient extends PatientViewPatient
         $arr = [
             'consument' => $this->relationValidation('consument', function () {
                 return $this->propExcludes($this->consument->toViewApi()->resolve(),'reference');
-            })
+            }),
+            'integration' => $this->integration
         ];
         $arr = $this->mergeArray(parent::toArray($request), $arr);
         return $arr;
