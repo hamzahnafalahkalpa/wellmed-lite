@@ -7,4 +7,5 @@ use Hanafalah\ModulePatient\Models\EMR\VisitExamination as EMRVisitExamination;
 class VisitExamination extends EMRVisitExamination
 {
     public function pharmacySale(){return $this->morphOneModel('PharmacySale', 'reference');}
+    public function observationSatuSehat(){return $this->morphOneModel('ObservationSatuSehat','reference');}
 }

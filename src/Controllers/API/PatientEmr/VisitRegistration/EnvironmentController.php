@@ -46,4 +46,14 @@ class EnvironmentController extends EnvEnvironmentController{
             $callback($query);
         })->storeVisitRegistration();
     }
+
+    protected function commonRequest(){
+        parent::commonRequest();
+        if (isset(request()->medic_service_label)){
+            $medic_service = $this->MedicServiceModel()->where('label',request()->medic_service_label)->firstOrFail();
+            request()->merge([
+                'medic_service_id' => $medic_service->id,
+            ]);
+        }
+    }
 }

@@ -13,6 +13,10 @@ use Projects\WellmedLite\{
 };
 use Hanafalah\MicroTenant\Contracts\Supports\ConnectionManager;
 use Hanafalah\MicroTenant\Facades\MicroTenant;
+use Projects\WellmedLite\Contracts\Schemas\ModuleRegional\WellmedAddress;
+use Projects\WellmedLite\Contracts\Schemas\ModuleWorkspace\Workspace;
+use Projects\WellmedLite\Schemas\ModuleRegional\WellmedAddress as ModuleRegionalWellmedAddress;
+use Projects\WellmedLite\Schemas\ModuleWorkspace\Workspace as ModuleWorkspaceWorkspace;
 use Projects\WellmedLite\Supports\ConnectionManager as SupportsConnectionManager;
 
 class WellmedLiteServiceProvider extends WellmedLiteEnvironment
@@ -29,7 +33,9 @@ class WellmedLiteServiceProvider extends WellmedLiteEnvironment
                         Contracts\WellmedLite::class => function(){
                             return new WellmedLite;
                         },
-                        ConnectionManager::class => SupportsConnectionManager::class
+                        ConnectionManager::class => SupportsConnectionManager::class,
+                        Workspace::class => ModuleWorkspaceWorkspace::class,
+                        WellmedAddress::class => ModuleRegionalWellmedAddress::class
                         //WorkspaceDTO\WorkspaceSettingData::class => WorkspaceSettingData::class
                     ]);   
                 },
