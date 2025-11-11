@@ -26,8 +26,11 @@ class EmployeeController extends ApiController{
         $this->userAttempt();
         if (isset(request()->user_reference)){
             $user_reference = request()->user_reference;
-            $user_reference['workspace_type'] = $this->global_workspace->getMorphClass();
-            $user_reference['workspace_id']   = $this->global_workspace->getKey();
+            $tenant = tenancy()->tenant;
+            $user_reference['workspace_type'] = $tenant->getMorphClass();
+            $user_reference['workspace_id']   = $tenant->getKey();
+            $user = $user_reference['user'];
+            $user['email_verified_at'] = now();
             request()->merge([
                 'user_reference' => $user_reference
             ]);
