@@ -21,17 +21,6 @@
             ]
         }
     },
-    "require": {
-        "hanafalah/module-encoding": "dev-main",
-        "hanafalah/module-workspace": "dev-main",
-        "hanafalah/wellmed-feature": "dev-main",
-        "wellmed-lite/ms-emr": "dev-main",
-        "wellmed-lite/ms-point-of-sale": "dev-main",
-        "wellmed-lite/ms-scm": "dev-main",
-        "wellmed-lite/ms-hr": "dev-main",
-        "wellmed-lite/ms-apotek": "dev-main",
-        "hanafalah/satu-sehat": "dev-main"
-    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": {
